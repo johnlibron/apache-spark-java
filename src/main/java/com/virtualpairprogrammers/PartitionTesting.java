@@ -15,9 +15,7 @@ import scala.Tuple2;
 
 public class PartitionTesting {
 
-	@SuppressWarnings("resource")
-	public static void main(String[] args) 
-	{
+	public static void main(String[] args) {
 		System.setProperty("hadoop.home.dir", "c:/hadoop");
 		Logger.getLogger("org.apache").setLevel(Level.WARN);
 		
@@ -59,5 +57,4 @@ public class PartitionTesting {
 		scanner.nextLine();
 		sc.close();
 	}
-
 }
