@@ -1,4 +1,4 @@
-package com.virtualpairprogrammers;
+package com.virtualpairprogrammers.rdd;
 
 public class IntegerWithSquareRoot {
 

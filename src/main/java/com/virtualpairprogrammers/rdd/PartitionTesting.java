@@ -1,4 +1,4 @@
-package com.virtualpairprogrammers;
+package com.virtualpairprogrammers.rdd;
 
 import java.util.Scanner;
 

@@ -1,4 +1,4 @@
-package com.virtualpairprogrammers;
+package com.virtualpairprogrammers.rdd;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -98,7 +98,7 @@ public class ViewingFigures {
 		return sc.textFile("src/main/resources/viewing figures/titles.csv")
 				                                    .mapToPair(commaSeparatedLine -> {
 														String[] cols = commaSeparatedLine.split(",");
-														return new Tuple2<Integer, String>(new Integer(cols[0]),cols[1]);
+														return new Tuple2<>(Integer.valueOf(cols[0]), cols[1]);
 				                                    });
 	}
 
@@ -128,7 +128,7 @@ public class ViewingFigures {
 		return sc.textFile("src/main/resources/viewing figures/chapters.csv")
 													  .mapToPair(commaSeparatedLine -> {
 															String[] cols = commaSeparatedLine.split(",");
-															return new Tuple2<Integer, Integer>(new Integer(cols[0]), new Integer(cols[1]));
+															return new Tuple2<>(Integer.valueOf(cols[0]), Integer.valueOf(cols[1]));
 													  	}).cache();
 	}
 
@@ -153,7 +153,7 @@ public class ViewingFigures {
 								"src/main/resources/viewing figures/views-3.csv")
 				     .mapToPair(commaSeparatedLine -> {
 				    	 String[] columns = commaSeparatedLine.split(",");
-				    	 return new Tuple2<>(new Integer(columns[0]), new Integer(columns[1]));
+				    	 return new Tuple2<>(Integer.valueOf(columns[0]), Integer.valueOf(columns[1]));
 				     });
 	}
 }

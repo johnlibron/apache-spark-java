@@ -1,4 +1,4 @@
-package com.virtualpairprogrammers;
+package com.virtualpairprogrammers.rdd;
 
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;

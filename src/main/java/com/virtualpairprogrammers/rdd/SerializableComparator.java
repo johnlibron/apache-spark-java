@@ -1,4 +1,4 @@
-package com.virtualpairprogrammers;
+package com.virtualpairprogrammers.rdd;
 
 import java.io.Serializable;
 import java.util.Comparator;

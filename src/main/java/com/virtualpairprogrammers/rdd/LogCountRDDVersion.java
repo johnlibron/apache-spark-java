@@ -1,4 +1,4 @@
-package com.virtualpairprogrammers;
+package com.virtualpairprogrammers.rdd;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -15,7 +15,7 @@ import org.apache.spark.api.java.JavaSparkContext;
 
 import scala.Tuple2;
 
-import static com.virtualpairprogrammers.SerializableComparator.*;
+import static com.virtualpairprogrammers.rdd.SerializableComparator.*;
 
 public class LogCountRDDVersion {
 
