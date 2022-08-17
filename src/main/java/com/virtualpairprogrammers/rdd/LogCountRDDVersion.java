@@ -63,6 +63,8 @@ public class LogCountRDDVersion {
 			Long total = nextResult._2;
 			System.out.println(level+"\t" + month + "\t\t" + total);
 		}
+
+		sc.close();
 	}
 
 	private static String rawDateToMonth(String raw) {
