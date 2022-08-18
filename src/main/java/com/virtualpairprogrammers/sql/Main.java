@@ -21,11 +21,11 @@ public class Main {
 
     public static void main(String[] args) {
         System.setProperty("hadoop.home.dir", "C:\\hadoop");
-        Logger.getLogger("org.apache").setLevel(Level.WARN);
 
         SparkSession spark = SparkSession.builder().appName("testingSql").master("local[*]")
                 .config("spark.sql.warehouse.dir", "file:///c:/tmp/")
                 .config("spark.testing.memory", "471859200").getOrCreate();
+        spark.sparkContext().setLogLevel("WARN");
 
         Person person = new Person();
         person.setName("Andy");

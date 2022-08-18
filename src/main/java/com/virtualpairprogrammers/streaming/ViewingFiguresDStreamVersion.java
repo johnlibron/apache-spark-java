@@ -38,11 +38,11 @@ public class ViewingFiguresDStreamVersion {
         params.put("value.deserializer", StringDeserializer.class);
         params.put("group.id", "spark-group");
         params.put("auto.offset.reset", "latest");
+        params.put("enable.auto.commit", true);
 
         JavaInputDStream<ConsumerRecord<String, String>> stream = KafkaUtils.createDirectStream(sc,
                 LocationStrategies.PreferConsistent(), ConsumerStrategies.Subscribe(topics, params));
 
-//        JavaDStream<String> results = stream.map(ConsumerRecord::value);
         JavaPairDStream<Long, String> results = stream
                 .mapToPair(item -> new Tuple2<>(item.value(), 5L))
                 .reduceByKeyAndWindow(Long::sum, Durations.minutes(60), Durations.minutes(1))
@@ -54,6 +54,5 @@ public class ViewingFiguresDStreamVersion {
         sc.awaitTermination();
 
         sc.close();
-
     }
 }
