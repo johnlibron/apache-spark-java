@@ -1,13 +1,12 @@
 package com.virtualpairprogrammers.pairRdd.filter;
 
+import com.virtualpairprogrammers.common.Utils;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaSparkContext;
 import scala.Tuple2;
 
 public class AirportsNotInUsa {
-
-    private static final String COMMA_DELIMITER = ",(?=([^\"]*\"[^\"]*\")*[^\"]*$)";
 
     public static void main(String[] args) throws Exception {
 
@@ -31,7 +30,7 @@ public class AirportsNotInUsa {
 
         JavaPairRDD<String, String> airportsNotInUSA = sc.textFile("src/main/resources/in/airports.text")
                 .mapToPair(line -> {
-                    String[] splits = line.split(COMMA_DELIMITER);
+                    String[] splits = line.split(Utils.COMMA_DELIMITER);
                     return new Tuple2<>(splits[1], splits[3]);
                 })
                 .filter(row -> !row._2.equals("\"United States\""));
