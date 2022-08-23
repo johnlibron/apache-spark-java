@@ -23,7 +23,7 @@ public class SameHosts {
 
            Make sure the head lines are removed in the resulting RDD.
          */
-        SparkConf conf = new SparkConf().setAppName("unionLogs").setMaster("local[1]");
+        SparkConf conf = new SparkConf().setAppName("intersectionLogs").setMaster("local[1]");
         JavaSparkContext sc = new JavaSparkContext(conf);
 
         JavaRDD<String> julyFirstLogs = sc.textFile("src/main/resources/in/nasa_19950701.tsv");
