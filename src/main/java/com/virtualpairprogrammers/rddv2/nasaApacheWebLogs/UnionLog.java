@@ -24,17 +24,13 @@ public class UnionLog {
         JavaRDD<String> julyFirstLogs = sc.textFile("src/main/resources/in/nasa_19950701.tsv");
         JavaRDD<String> augustFirstLogs = sc.textFile("src/main/resources/in/nasa_19950801.tsv");
 
-        JavaRDD<String> aggregatedLogLines = julyFirstLogs.union(augustFirstLogs);
-
-        JavaRDD<String> clearLogLines = aggregatedLogLines.filter(UnionLog::isNotHeader);
-
-        JavaRDD<String> sampleLogs = clearLogLines.sample(true, 0.1);
+        JavaRDD<String> sampleLogs = julyFirstLogs.union(augustFirstLogs)
+                .filter(line -> !(line.startsWith("host") && line.endsWith("bytes")))
+                .sample(true, 0.1);
 
         sampleLogs.collect().forEach(System.out::println);
 //        sampleLogs.saveAsTextFile("src/main/resources/out/sample_nasa_logs.csv");
 
         sc.close();
     }
-
-    private static boolean isNotHeader(String line) { return !(line.startsWith("host") && line.endsWith("bytes")); }
 }

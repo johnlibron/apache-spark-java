@@ -32,15 +32,12 @@ public class SameHosts {
         JavaRDD<String> julyFirstHosts = julyFirstLogs.map(line -> line.split("\t")[0]);
         JavaRDD<String> augustFirstHosts = augustFirstLogs.map(line -> line.split("\t")[0]);
 
-        JavaRDD<String> intersection = julyFirstHosts.intersection(augustFirstHosts);
+        JavaRDD<String> intersection = julyFirstHosts.intersection(augustFirstHosts)
+                .filter(line -> !(line.startsWith("host") && line.endsWith("bytes")));
 
-        JavaRDD<String> cleanedHostIntersection = intersection.filter(SameHosts::isNotHeader);
-
-        cleanedHostIntersection.collect().forEach(System.out::println);
-//        cleanedHostIntersection.saveAsTextFile("out/nasa_logs_same_hosts.csv");
+        intersection.collect().forEach(System.out::println);
+//        intersection.saveAsTextFile("out/nasa_logs_same_hosts.csv");
 
         sc.close();
     }
-
-    private static boolean isNotHeader(String line) { return !(line.startsWith("host") && line.endsWith("bytes")); }
 }
