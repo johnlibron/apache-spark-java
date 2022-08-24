@@ -52,8 +52,8 @@ public class AverageHousePrice {
         JavaSparkContext sc = new JavaSparkContext(conf);
 
         Function<Double, AvgCount> createAvgCount = price -> new AvgCount(1, price);
-        Function2<AvgCount, Double, AvgCount> addPriceAndCount = (prevAvgCount, currentPrice) ->
-                new AvgCount(prevAvgCount.getCount() + 1,prevAvgCount.getTotal() + currentPrice);
+        Function2<AvgCount, Double, AvgCount> addPriceAndCount = (avgCount, price) ->
+                new AvgCount(avgCount.getCount() + 1,avgCount.getTotal() + price);
         Function2<AvgCount, AvgCount, AvgCount> combineTotalPriceAndCount = (avgCountA, avgCountB) ->
                 new AvgCount(avgCountA.getCount() + avgCountB.getCount(),avgCountA.getTotal() + avgCountB.getTotal());
 
