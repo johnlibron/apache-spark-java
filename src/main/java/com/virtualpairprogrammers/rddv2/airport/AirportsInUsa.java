@@ -27,9 +27,9 @@ public class AirportsInUsa {
         JavaSparkContext sc = new JavaSparkContext(conf);
 
         JavaRDD<String> airportsNameAndCityNames = sc.textFile("src/main/resources/in/airports.text")
-                .filter(line -> line.split(Utils.COMMA_DELIMITER)[3].equals("\"United States\""))
-                .map(line -> {
-                    String[] splits = line.split(Utils.COMMA_DELIMITER);
+                .filter(airport -> airport.split(Utils.COMMA_DELIMITER)[3].equals("\"United States\""))
+                .map(airport -> {
+                    String[] splits = airport.split(Utils.COMMA_DELIMITER);
                     return StringUtils.join(new String[]{ splits[1], splits[2] }, ",");
                 });
         airportsNameAndCityNames.collect().forEach(System.out::println);

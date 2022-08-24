@@ -55,7 +55,9 @@ public class AverageHousePrice {
                     String[] splits = line.split(",");
                     return new Tuple2<>(splits[3], new AvgCount(1, Double.parseDouble(splits[2])));
                 })
-                .reduceByKey((x, y) -> new AvgCount(x.getCount() + y.getCount(), x.getTotal() + y.getTotal()))
+                .reduceByKey((avgCountA, avgCountB) -> new AvgCount(
+                        avgCountA.getCount() + avgCountB.getCount(),
+                        avgCountA.getTotal() + avgCountB.getTotal()))
                 .mapValues(avgCount -> avgCount.getTotal() / avgCount.getCount())
                 .sortByKey();
 

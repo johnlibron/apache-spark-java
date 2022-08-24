@@ -27,9 +27,9 @@ public class AirportsByLatitude {
         JavaSparkContext sc = new JavaSparkContext(conf);
 
         JavaRDD<String> airportsNameAndLatitude = sc.textFile("src/main/resources/in/airports.text")
-                .filter(line -> Double.parseDouble(line.split(Utils.COMMA_DELIMITER)[6]) > 40)
-                .map(line -> {
-                    String[] splits = line.split(Utils.COMMA_DELIMITER);
+                .filter(airport -> Double.parseDouble(airport.split(Utils.COMMA_DELIMITER)[6]) > 40)
+                .map(airport -> {
+                    String[] splits = airport.split(Utils.COMMA_DELIMITER);
                     return StringUtils.join(new String[] {splits[1], splits[6]}, ",");
                 });
         airportsNameAndLatitude.collect().forEach(System.out::println);

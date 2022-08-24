@@ -6,6 +6,8 @@ import org.apache.log4j.Logger;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaSparkContext;
+import org.apache.spark.api.java.function.Function;
+import org.apache.spark.api.java.function.Function2;
 import scala.Tuple2;
 
 import java.util.Map;
@@ -49,18 +51,19 @@ public class AverageHousePrice {
         SparkConf conf = new SparkConf().setAppName("averageHousePrice").setMaster("local[3]");
         JavaSparkContext sc = new JavaSparkContext(conf);
 
+        Function<Double, AvgCount> createAvgCount = price -> new AvgCount(1, price);
+        Function2<AvgCount, Double, AvgCount> addPriceAndCount = (prevAvgCount, currentPrice) ->
+                new AvgCount(prevAvgCount.getCount() + 1,prevAvgCount.getTotal() + currentPrice);
+        Function2<AvgCount, AvgCount, AvgCount> combineTotalPriceAndCount = (avgCountA, avgCountB) ->
+                new AvgCount(avgCountA.getCount() + avgCountB.getCount(),avgCountA.getTotal() + avgCountB.getTotal());
+
         JavaPairRDD<String, Double> housePriceAvg = sc.textFile("src/main/resources/in/RealEstate.csv")
                 .filter(line -> !line.contains("Bedrooms"))
                 .mapToPair(line -> {
                     String[] splits = line.split(",");
                     return new Tuple2<>(splits[3], Double.parseDouble(splits[2]));
                 })
-                .combineByKey(
-                        price -> new AvgCount(1, price),
-                        (prevAvgCount, currentPrice) -> new AvgCount(prevAvgCount.getCount() + 1,
-                                prevAvgCount.getTotal() + currentPrice),
-                        (avgCountA, avgCountB) -> new AvgCount(avgCountA.getCount() + avgCountB.getCount(),
-                                avgCountA.getTotal() + avgCountB.getTotal()))
+                .combineByKey(createAvgCount, addPriceAndCount, combineTotalPriceAndCount)
                 .mapValues(avgCount -> avgCount.getTotal() / avgCount.getCount());
 
         for (Map.Entry<String, Double> housePriceAvgPair : housePriceAvg.collectAsMap().entrySet()) {

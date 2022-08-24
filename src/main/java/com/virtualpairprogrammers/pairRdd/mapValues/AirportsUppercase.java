@@ -29,8 +29,8 @@ public class AirportsUppercase {
         JavaSparkContext sc = new JavaSparkContext(conf);
 
         JavaPairRDD<String, String> airportsCountryUppercase = sc.textFile("src/main/resources/in/airports.text")
-                .mapToPair(line -> {
-                    String[] splits = line.split(Utils.COMMA_DELIMITER);
+                .mapToPair(airport -> {
+                    String[] splits = airport.split(Utils.COMMA_DELIMITER);
                     return new Tuple2<>(splits[1], splits[3]);
                 })
                 .mapValues(String::toUpperCase);
