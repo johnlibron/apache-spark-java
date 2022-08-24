@@ -1,0 +1,51 @@
+package com.virtualpairprogrammers.pairRdd.join;
+
+import org.apache.spark.SparkConf;
+import org.apache.spark.api.java.JavaPairRDD;
+import org.apache.spark.api.java.JavaSparkContext;
+import org.apache.spark.api.java.Optional;
+import scala.Tuple2;
+
+import java.util.Arrays;
+
+public class JoinOperations {
+
+    public static void main(String[] args) throws Exception {
+
+        SparkConf conf = new SparkConf().setAppName("JoinOperations").setMaster("local[1]");
+
+        JavaSparkContext sc = new JavaSparkContext(conf);
+
+        JavaPairRDD<String, Integer> ages = sc.parallelizePairs(Arrays.asList(new Tuple2<>("Tom", 29),
+                                                                              new Tuple2<>("John", 22)));
+
+        JavaPairRDD<String, String> addresses = sc.parallelizePairs(Arrays.asList(new Tuple2<>("James", "USA"),
+                                                                                  new Tuple2<>("John", "UK")));
+
+        JavaPairRDD<String, Tuple2<Integer, String>> join = ages.join(addresses);
+
+        System.out.println("Join");
+        join.collect().forEach(System.out::println);
+//        join.saveAsTextFile("out/age_address_join.text");
+
+        JavaPairRDD<String, Tuple2<Integer, Optional<String>>> leftOuterJoin = ages.leftOuterJoin(addresses);
+
+        System.out.println("Left Outer Join");
+        leftOuterJoin.collect().forEach(System.out::println);
+//        leftOuterJoin.saveAsTextFile("out/age_address_left_out_join.text");
+
+        JavaPairRDD<String, Tuple2<Optional<Integer>, String>> rightOuterJoin = ages.rightOuterJoin(addresses);
+
+        System.out.println("Right Outer Join");
+        rightOuterJoin.collect().forEach(System.out::println);
+//        rightOuterJoin.saveAsTextFile("out/age_address_right_out_join.text");
+
+        JavaPairRDD<String, Tuple2<Optional<Integer>, Optional<String>>> fullOuterJoin = ages.fullOuterJoin(addresses);
+
+        System.out.println("Full Outer Join");
+        fullOuterJoin.collect().forEach(System.out::println);
+//        fullOuterJoin.saveAsTextFile("out/age_address_full_out_join.text");
+
+        sc.close();
+    }
+}
