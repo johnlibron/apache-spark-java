@@ -55,7 +55,8 @@ public class AverageHousePrice {
                     return new Tuple2<>(splits[3], new AvgCount(1, Double.parseDouble(splits[2])));
                 })
                 .reduceByKey((x, y) -> new AvgCount(x.getCount() + y.getCount(), x.getTotal() + y.getTotal()))
-                .mapValues(avgCount -> avgCount.getTotal() / avgCount.getCount());
+                .mapValues(avgCount -> avgCount.getTotal() / avgCount.getCount())
+                .sortByKey();
 
         for (Map.Entry<String, Double> housePriceAvgPair : housePriceAvg.collectAsMap().entrySet()) {
             System.out.println(housePriceAvgPair.getKey() + " : " + housePriceAvgPair.getValue());

@@ -1,4 +1,4 @@
-package com.virtualpairprogrammers.pairRdd.aggregation.reduceByKey;
+package com.virtualpairprogrammers.pairRdd.sort;
 
 
 import org.apache.log4j.Level;
@@ -9,12 +9,20 @@ import org.apache.spark.api.java.JavaSparkContext;
 import scala.Tuple2;
 
 import java.util.Arrays;
-import java.util.Map;
 
-public class WordCount {
+public class SortedWordCount {
 
-    public static void main(String[] args) throws Exception {
+    /* Create a Spark program to read an article from in/word_count.text,
+       output the number of occurrence of each word in descending order.
 
+       Sample output:
+
+       apple : 200
+       shoes : 193
+       bag : 176
+       ...
+    */
+    public static void main(String[] args) {
         Logger.getLogger("org").setLevel(Level.ERROR);
         SparkConf conf = new SparkConf().setAppName("wordCounts").setMaster("local[3]");
         JavaSparkContext sc = new JavaSparkContext(conf);
@@ -22,15 +30,18 @@ public class WordCount {
         JavaPairRDD<String, Long> wordCounts = sc.textFile("src/main/resources/in/word_count.text")
                 .flatMap(line -> Arrays.asList(line.split(" ")).iterator())
                 .filter(word -> !word.isEmpty())
+                .map(String::toLowerCase)
                 .mapToPair(word -> new Tuple2<>(word, 1L))
-                .reduceByKey(Long::sum);
+                .reduceByKey(Long::sum)
+                .mapToPair(Tuple2::swap)
+                .sortByKey(false)
+                .mapToPair(Tuple2::swap);
 
-        Map<String, Long> worldCountsMap = wordCounts.collectAsMap();
-
-        for (Map.Entry<String, Long> wordCountPair : worldCountsMap.entrySet()) {
-            System.out.println(wordCountPair.getKey() + " : " + wordCountPair.getValue());
+        for (Tuple2<String, Long> wordCount : wordCounts.collect()) {
+            System.out.println(wordCount._1() + " : " + wordCount._2());
         }
 
         sc.close();
     }
 }
+
