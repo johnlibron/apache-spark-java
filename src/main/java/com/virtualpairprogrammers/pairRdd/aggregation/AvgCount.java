@@ -1,4 +1,4 @@
-package com.virtualpairprogrammers.pairRdd.aggregation.reduceByKey.housePrice;
+package com.virtualpairprogrammers.pairRdd.aggregation;
 
 import java.io.Serializable;
 

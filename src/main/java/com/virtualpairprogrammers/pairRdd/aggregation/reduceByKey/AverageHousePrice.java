@@ -1,6 +1,7 @@
-package com.virtualpairprogrammers.pairRdd.aggregation.reduceByKey.housePrice;
+package com.virtualpairprogrammers.pairRdd.aggregation.reduceByKey;
 
 
+import com.virtualpairprogrammers.pairRdd.aggregation.AvgCount;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.apache.spark.SparkConf;
