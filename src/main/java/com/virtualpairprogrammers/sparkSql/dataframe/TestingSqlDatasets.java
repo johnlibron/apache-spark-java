@@ -10,7 +10,7 @@ public class TestingSqlDatasets {
     public static void main(String[] args) {
         SparkSession spark = SparkSession.builder().appName("testingSql").master("local[*]").getOrCreate();
 
-        Dataset<Row> dataset = spark.read().option("header", true).csv("src/main/resources/exams/students.csv");
+        Dataset<Row> dataset = spark.read().option("header", true).csv("src/main/resources/exams/students-*.csv");
         dataset.show();
 
         long numberOfRows = dataset.count();

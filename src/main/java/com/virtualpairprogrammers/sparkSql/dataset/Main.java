@@ -55,7 +55,7 @@ public class Main {
         });
         Encoder<Student> studentEncoder = Encoders.bean(Student.class);
         Dataset<Student> studentDataset = spark.read().option("header", true)
-            .schema(schema).csv("src/main/resources/exams/students.csv")
+            .schema(schema).csv("src/main/resources/exams/students-*.csv")
             .withColumnRenamed("student_id", "studentId")
             .withColumnRenamed("exam_center_id", "examCenterId")
             .as(studentEncoder);
