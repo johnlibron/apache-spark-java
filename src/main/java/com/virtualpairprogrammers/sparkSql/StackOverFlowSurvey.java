@@ -1,8 +1,10 @@
 package com.virtualpairprogrammers.sparkSql;
 
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
-import org.apache.spark.sql.*;
+import org.apache.spark.sql.DataFrameReader;
+import org.apache.spark.sql.Dataset;
+import org.apache.spark.sql.RelationalGroupedDataset;
+import org.apache.spark.sql.Row;
+import org.apache.spark.sql.SparkSession;
 
 import static org.apache.spark.sql.functions.avg;
 import static org.apache.spark.sql.functions.col;
@@ -15,8 +17,6 @@ public class StackOverFlowSurvey {
     private static final String SALARY_MIDPOINT_BUCKET = "salary_midpoint_bucket";
 
     public static void main(String[] args) throws Exception {
-
-        Logger.getLogger("org").setLevel(Level.ERROR);
         SparkSession session = SparkSession.builder().appName("StackOverFlowSurvey").master("local[1]").getOrCreate();
 
         DataFrameReader dataFrameReader = session.read();

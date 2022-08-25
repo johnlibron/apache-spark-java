@@ -12,9 +12,7 @@ import java.util.List;
 public class PairRddFromRegularRdd {
 
     public static void main(String[] args) throws Exception {
-
         SparkConf conf = new SparkConf().setAppName("create").setMaster("local[1]");
-
         JavaSparkContext sc = new JavaSparkContext(conf);
 
         List<String> inputStrings = Arrays.asList("Lily 23", "Jack 29", "Mary 29", "James 8");

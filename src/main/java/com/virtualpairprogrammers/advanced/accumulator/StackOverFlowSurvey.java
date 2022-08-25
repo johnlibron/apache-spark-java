@@ -1,8 +1,6 @@
 package com.virtualpairprogrammers.advanced.accumulator;
 
 import com.virtualpairprogrammers.common.Utils;
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
 import org.apache.spark.SparkConf;
 import org.apache.spark.SparkContext;
 import org.apache.spark.api.java.JavaRDD;
@@ -13,7 +11,6 @@ import scala.Option;
 public class StackOverFlowSurvey {
 
     public static void main(String[] args) throws Exception {
-        Logger.getLogger("org").setLevel(Level.ERROR);
         SparkConf conf = new SparkConf().setAppName("StackOverFlowSurvey").setMaster("local[1]");
         SparkContext sparkContext = new SparkContext(conf);
         JavaSparkContext javaSparkContext = new JavaSparkContext(sparkContext);

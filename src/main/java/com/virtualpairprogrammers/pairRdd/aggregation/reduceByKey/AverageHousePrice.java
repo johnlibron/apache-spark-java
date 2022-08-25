@@ -2,8 +2,6 @@ package com.virtualpairprogrammers.pairRdd.aggregation.reduceByKey;
 
 
 import com.virtualpairprogrammers.pairRdd.aggregation.AvgCount;
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaSparkContext;
@@ -44,8 +42,6 @@ public class AverageHousePrice {
 
            3, 1 and 2 mean the number of bedrooms. 325000 means the average price of houses with 3 bedrooms is 325000.
          */
-
-        Logger.getLogger("org").setLevel(Level.ERROR);
         SparkConf conf = new SparkConf().setAppName("averageHousePrice").setMaster("local[3]");
         JavaSparkContext sc = new JavaSparkContext(conf);
 

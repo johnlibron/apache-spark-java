@@ -11,7 +11,6 @@ import java.util.List;
 public class PairRddFromTupleList {
 
     public static void main(String[] args) throws Exception {
-
         SparkConf conf = new SparkConf().setAppName("create").setMaster("local[1]");
         JavaSparkContext sc = new JavaSparkContext(conf);
 

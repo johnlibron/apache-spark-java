@@ -11,9 +11,7 @@ import java.util.Arrays;
 public class JoinOperations {
 
     public static void main(String[] args) throws Exception {
-
         SparkConf conf = new SparkConf().setAppName("JoinOperations").setMaster("local[1]");
-
         JavaSparkContext sc = new JavaSparkContext(conf);
 
         JavaPairRDD<String, Integer> ages = sc.parallelizePairs(Arrays.asList(new Tuple2<>("Tom", 29),

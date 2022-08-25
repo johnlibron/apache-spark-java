@@ -1,19 +1,16 @@
 package com.virtualpairprogrammers.sparkSql.join;
 
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
 import org.apache.spark.sql.Dataset;
 import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 
-import static org.apache.spark.sql.functions.*;
+import static org.apache.spark.sql.functions.col;
+import static org.apache.spark.sql.functions.concat_ws;
+import static org.apache.spark.sql.functions.lit;
 
 public class UkMakerSpaces {
 
     public static void main(String[] args) throws Exception {
-
-        Logger.getLogger("org").setLevel(Level.ERROR);
-
         SparkSession session = SparkSession.builder().appName("UkMakerSpaces").master("local[*]").getOrCreate();
 
         Dataset<Row> makerSpace = session.read().option("header", "true")
