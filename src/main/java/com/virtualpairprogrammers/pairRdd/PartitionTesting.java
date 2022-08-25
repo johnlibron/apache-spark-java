@@ -16,16 +16,18 @@ public class PartitionTesting {
 		SparkConf conf = new SparkConf().setAppName("startingSpark").setMaster("local[*]");
 		JavaSparkContext sc = new JavaSparkContext(conf);
 		
-		JavaRDD<String> initialRdd = sc.textFile("src/main/resources/bigLog.txt");
+		JavaRDD<String> initialRdd = sc.textFile("src/main/resources/loggingV2/bigLog-*.txt");
 
 		System.out.println("Initial RDD Partition Size: " + initialRdd.getNumPartitions());
 		
-		JavaPairRDD<String, String> warningsAgainstDate = initialRdd.mapToPair(inputLine -> {
-			String[] cols = inputLine.split(":");
-			String level = cols[0];
-			String date = cols[1];
-			return new Tuple2<>(level, date);
-		});
+		JavaPairRDD<String, String> warningsAgainstDate = initialRdd
+				.filter(line -> !line.isEmpty())
+				.mapToPair(inputLine -> {
+					String[] cols = inputLine.split(":");
+					String level = cols[0];
+					String date = cols[1];
+					return new Tuple2<>(level, date);
+				});
 		
 		System.out.println("After a narrow transformation we have " + warningsAgainstDate.getNumPartitions() + " parts");
 		
