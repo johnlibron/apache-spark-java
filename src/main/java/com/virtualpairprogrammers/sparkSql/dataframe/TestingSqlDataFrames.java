@@ -17,7 +17,7 @@ public class TestingSqlDataFrames {
     public static void main(String[] args) {
         SparkSession spark = SparkSession.builder().appName("testingSql").master("local[*]").getOrCreate();
 
-        Dataset<Row> dataset = spark.read().option("header", true).csv("src/main/resources/logging/biglog.txt");
+        Dataset<Row> dataset = spark.read().option("header", true).csv("src/main/resources/logging/biglog-*.txt");
 
         Object[] months = new Object[] {
             "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"

@@ -66,7 +66,7 @@ public class Main {
 
         // Create an RDD of Person objects from a text file
         JavaRDD<Log> logRDD = spark.read()
-            .textFile("src/main/resources/logging/biglog.txt")
+            .textFile("src/main/resources/logging/biglog-*.txt")
             .javaRDD()
             .map(line -> {
                 String[] parts = line.split(",");

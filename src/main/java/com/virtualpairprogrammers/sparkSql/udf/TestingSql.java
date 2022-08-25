@@ -16,7 +16,7 @@ public class TestingSql {
 
         // spark.conf().set("spark.sql.shuffle.partitions", "2");
 
-        Dataset<Row> ds = spark.read().option("header", true).csv("src/main/resources/logging/biglog.txt");
+        Dataset<Row> ds = spark.read().option("header", true).csv("src/main/resources/logging/biglog-*.txt");
 
         SimpleDateFormat input = new SimpleDateFormat("MMMM");
         SimpleDateFormat output = new SimpleDateFormat("M");

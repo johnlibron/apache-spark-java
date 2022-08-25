@@ -20,7 +20,7 @@ public class LogCountRDDVersion {
 		SparkConf conf = new SparkConf().setAppName("startingSpark").setMaster("local[*]");
 		JavaSparkContext sc = new JavaSparkContext(conf);
 
-		JavaPairRDD<String, Long> pairs = sc.textFile("src/main/resources/logging/biglog.txt")
+		JavaPairRDD<String, Long> pairs = sc.textFile("src/main/resources/logging/biglog-*.txt")
 				.filter(line -> !line.startsWith("level,datetime"))
 				.mapToPair(rawValue -> {
 					String[] csvFields = rawValue.split(",");
